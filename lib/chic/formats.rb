@@ -70,9 +70,22 @@ module Chic
 
     private
 
+    # rubocop: disable Metrics/MethodLength
     def _formatters
-      Chic.configuration.formatters
+      @_formatters ||= Chic.configuration.formatters.reduce({}) do |result, (key, klass)|
+        formatter = case klass
+                    when Class
+                      klass
+                    when String
+                      klass.constantize
+                    else
+                      raise ConfigFormatterNotValid, "Configured formatter for #{key} must be a class or class-string"
+                    end
+
+        result.merge(key => formatter)
+      end
     end
+    # rubocop: enable Metrics/MethodLength
 
     def _formats_options_value(attribute, options)
       return object&.public_send(attribute) unless options.is_a?(Hash) && options.key?(:value)
