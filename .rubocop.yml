@@ -1,8 +1,11 @@
 AllCops:
+  NewCops: enable
   TargetRubyVersion: 2.7
+  Exclude:
+    - 'bin/**/*'
 
-Documentation:
-  Enabled: false
-
-Metrics/LineLength:
+Layout/LineLength:
   Max: 120
+
+Style/Documentation:
+  Enabled: false

@@ -115,10 +115,13 @@ module Chic
     def _presents_options_value(attribute, options)
       return object&.public_send(attribute) unless options.is_a?(Hash) && options.key?(:value)
 
-      if options[:value].is_a?(Symbol)
+      case options[:value]
+      when Symbol
         send(options[:value])
-      elsif options[:value].is_a?(Proc)
+      when Proc
         instance_exec(&options[:value])
+      else
+        raise PresentsOptionsNotValid, "Options value for #{attribute} must be a symbol or a Proc"
       end
     end
   end

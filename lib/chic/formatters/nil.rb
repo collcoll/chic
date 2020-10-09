@@ -17,7 +17,7 @@ module Chic
       private
 
       def value
-        object&.to_s
+        object.to_s
       end
     end
   end
