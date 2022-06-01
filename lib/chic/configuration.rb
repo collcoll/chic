@@ -11,8 +11,9 @@ module Chic
       nil: Formatters::Nil
     }.freeze
 
-    attr_writer :logger,
-                :formatters
+    attr_writer :formatters,
+                :logger,
+                :raise_exceptions
 
     def formatters
       @formatters ||= FORMATTERS.dup
@@ -20,6 +21,10 @@ module Chic
 
     def logger
       @logger ||= Logger.new($stdout)
+    end
+
+    def raise_exceptions
+      @raise_exceptions == true
     end
   end
 end

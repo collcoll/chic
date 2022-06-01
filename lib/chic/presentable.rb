@@ -12,6 +12,8 @@ module Chic
 
     module_function
 
+    # rubocop: disable Metrics/AbcSize
+    # rubocop: disable Metrics/MethodLength
     def presenter_for(object)
       if object.respond_to?(:presenter_class)
         object.presenter_class
@@ -19,8 +21,14 @@ module Chic
         "#{object&.model_name || object.class.name}Presenter".constantize
       end
     rescue NameError, LoadError
+      if Chic.configuration.raise_exceptions
+        raise PresenterClassNotDefined, "Couldn't find a presenter for '#{object.class.name}'"
+      end
+
       Chic.configuration.logger&.debug "Couldn't find a presenter for '#{object.class.name}'"
       nil
     end
+    # rubocop: enable Metrics/AbcSize
+    # rubocop: enable Metrics/MethodLength
   end
 end
