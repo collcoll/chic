@@ -1,0 +1,27 @@
+version: '2.1'
+orbs:
+  ruby: circleci/ruby@1.8.0
+jobs:
+  lint:
+    docker:
+      - image: cimg/ruby:3.1.2
+    steps:
+      - checkout
+      - run:
+          name: Install Bundler
+          command: gem install bundler -v 2.3.10
+      - run:
+          name: Install dependencies
+          command: |
+            bundle config set --local path 'vendor/bundle'
+            bundle install --jobs=4 --retry=3
+      - run:
+          name: Directory
+          command: pwd && ls -la
+      - run:
+          name: Lint with Rubocop
+          command: rubocop --display-cop-names --extra-details --display-style-guide
+workflows:
+  lint_and_test:
+    jobs:
+      - lint
