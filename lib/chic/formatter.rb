@@ -2,11 +2,12 @@
 
 module Chic
   class Formatter < SimpleDelegator
-    delegate :to_s,
-             to: :object
-
     def object
       __getobj__
+    end
+
+    def to_s
+      object.to_s
     end
   end
 end
