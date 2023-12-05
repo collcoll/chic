@@ -91,7 +91,7 @@ module Chic
     def present(object, with: nil)
       if object.is_a?(Enumerable)
         object.map { |o| present(o, with: with) }
-      elsif with.present?
+      elsif with.is_a?(Class)
         with.new(object, context)
       elsif object.nil?
         nil_presenter(object)

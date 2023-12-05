@@ -2,11 +2,19 @@
 
 module Chic
   class Formatter < SimpleDelegator
-    delegate :to_s,
-             to: :object
+    attr_reader :context
+
+    def initialize(object, context = nil)
+      super(object)
+      @context = context
+    end
 
     def object
       __getobj__
+    end
+
+    def to_s
+      object.to_s
     end
   end
 end

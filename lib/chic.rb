@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'delegate'
+
 require 'chic/version'
 require 'chic/errors'
 require 'chic/helpers'

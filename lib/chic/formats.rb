@@ -110,7 +110,8 @@ module Chic
     end
 
     def format(value, with: nil, **options)
-      _formatter_class(with).new(value).tap do |formatter|
+      formatter_context = respond_to?(:context) ? context : nil
+      _formatter_class(with).new(value, formatter_context).tap do |formatter|
         options.each do |option, argument|
           formatter.public_send(option, argument) if formatter.respond_to?(option)
         end
